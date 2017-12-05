@@ -17,15 +17,19 @@ let val l = ceil(sqrt(real(n))) in
   (l div 2) * 2 + 1
 end
 
-(* level is the "spiral level" that element n lies on.  Level k has
-* length 2k + 1. *)
+(* level is the "spiral level" that element n lies on. *)
 fun level n = ceil(sqrt(real(n))) div 2
 
-fun f n = let 
+(* If we "rotate" whatever side `n` is on so it's on the right
+* vertical side of the level, then the horizontal component of the 
+* manhattan distance is just the level number and the vertical component
+* is the offset from the "x-intercept". 
+* *)
+fun day3p1 n = let 
   val level = level n           (* what spiral level are we on *)
   val (min, max) = range level  (* extrema values for this level *)
-  val len = sideLen n           (* how long is a side of the level *)
-  val off = (len div 2) + 1     (* greatest offset from horizontal origin *)
+  val m = (sideLen n) - 1       (* how long is a side of the level *)
+  val zoff = level - 1          (* dist from min to the horiz axis *)
 in
-  (n - min) mod (len - 1)
+  level + abs(((n - min) mod m) - zoff)
 end
