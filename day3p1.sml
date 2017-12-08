@@ -20,6 +20,13 @@ end
 (* level is the "spiral level" that element n lies on. *)
 fun level n = ceil(sqrt(real(n))) div 2
 
+fun spiral n = let 
+  val (min, max) = range n 
+  val flat = List.tabulate(max-min, fn x => x + min)
+in
+  flat
+end
+
 (* If we "rotate" whatever side `n` is on so it's on the right
 * vertical side of the level, then the horizontal component of the 
 * manhattan distance is just the level number and the vertical component
